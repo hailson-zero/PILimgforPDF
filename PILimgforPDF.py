@@ -9,7 +9,10 @@ def PILimagforPDF(img_path):
     pdf_path = os.path.join(img_path,'pdf_files')
     print(pdf_path + '\n')
     if pdf_path not in glob.glob(os.path.join(img_path,'*')):
-        os.mkdir(pdf_path)
+        try: 
+            os.mkdir(pdf_path)
+        except:
+            print('The directory is invalid! \nRestart the program and try again.')
 
     manga_path = sorted(glob.glob(os.path.join(img_path,'*')), key=len)
     for folder in manga_path:
@@ -38,9 +41,12 @@ def PILimagforPDF(img_path):
         img_files = sorted(glob.glob(u'{}'.format(img_dir)), key=len)
         for img_file in img_files:
             if img_file.endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp')):
-                images.append(Image.open(img_file).convert("RGB"))
+                try:
+                    images.append(Image.open(img_file).convert("RGB"))
+                except:
+                    print ('Unable to convert this file:' + img_file)
             else:
-                print (img_file +' Unable to convert this file')
+                print ('Unable to convert this file:' + img_file)
                     
         if check == True:
             continue
