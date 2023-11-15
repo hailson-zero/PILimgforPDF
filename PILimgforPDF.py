@@ -2,6 +2,7 @@ import os
 import sys
 from PIL import Image
 import glob
+from natsort import os_sorted
 
 def PILimagforPDF(img_path):
     fse = sys.getfilesystemencoding()
@@ -14,7 +15,7 @@ def PILimagforPDF(img_path):
         except:
             print('The directory is invalid! \nRestart the program and try again.')
 
-    manga_path = sorted(glob.glob(os.path.join(img_path,'*')), key=len)
+    manga_path = os_sorted(glob.glob(os.path.join(img_path,'*')))
     for folder in manga_path:
         check = False
         if pdf_path in folder:
@@ -38,9 +39,9 @@ def PILimagforPDF(img_path):
         images = []
         img_dir = os.path.join(folder,'*')
         print(name)
-        img_files = sorted(glob.glob(u'{}'.format(img_dir)), key=len)
+        img_files = os_sorted(glob.glob(u'{}'.format(img_dir)))
         for img_file in img_files:
-            if img_file.endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp')):
+            if img_file.endswith(('.jpg', '.JPG', '.jpeg', '.png', '.PNG', '.gif', '.webp')):
                 try:
                     images.append(Image.open(img_file).convert("RGB"))
                 except:
